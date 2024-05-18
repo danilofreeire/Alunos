@@ -6,6 +6,7 @@ package dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -31,14 +32,8 @@ public class Aluno implements Serializable {
         
     }
 
-    public Aluno(String matricula, String nome, Integer idade, String telefone) {
-        this.matricula = matricula;
-        this.nome = nome;
-        this.idade = idade;
-        this.telefone = telefone;
-    }
     
-    public Aluno(String matricula, String nome, Integer idade, LocalDate dataNas, String telefone, String cpf) {
+    public Aluno(String matricula, String nome,Integer idade, LocalDate dataNas, String telefone, String cpf) {
         this.matricula = matricula;
         this.nome = nome;
         this.idade = idade;
@@ -71,6 +66,7 @@ public class Aluno implements Serializable {
         this.idade = idade;
     }
 
+ 
     public LocalDate getDataNas() {
         return dataNas;
     }
@@ -94,10 +90,11 @@ public class Aluno implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+    
 
     @Override
     public String toString() {
-        return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", idade=" + idade + ", dataNas=" + dataNas + ", telefone=" + telefone + ", cpf=" + cpf + '}';
+        return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", dataNas=" + dataNas + ", telefone=" + telefone + ", cpf=" + cpf + '}';
     }
     
     

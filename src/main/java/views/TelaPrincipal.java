@@ -4,6 +4,17 @@
  */
 package views;
 
+import dominio.AdicionarAlunoDAO;
+import dominio.Aluno;
+import exceptions.AlunoException;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,6 +23,10 @@ import javax.swing.table.DefaultTableModel;
  * @author DANILO
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+    DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    AdicionarAlunoDAO aad = new AdicionarAlunoDAO();
+    List<Aluno> alunos = new ArrayList<>();
 
     /**
      * Creates new form TelaPrincipal
@@ -80,6 +95,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel4.setText("Telefone");
 
         jLabel5.setText("Nascimento");
+
+        try {
+            tfMatricula.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         try {
             tfCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -215,7 +236,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Matricula", "Nome", "CPF", "Nascimento", "Telefone"
+                "Matricula", "Nome", "Idade", "CPF", "Nascimento", "Telefone"
             }
         ));
         jScrollPane2.setViewportView(tbAlunos);
@@ -263,14 +284,60 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null, "Nome: "+ tfNome.getText()+ " Matricula: "+tfMatricula.getText());
-        DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
-        Object[] dados = {tfMatricula.getText(),tfNome.getText(),tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
-        dtmAlunos.addRow(dados);
+       
+            LocalDate data = LocalDate.parse(tfNascimento.getText(),fmt1);
+            LocalDate atual = LocalDate.now();
+
+            int anoNasc = data.getYear();
+            int anoAtual = atual.getYear();
+            int idade = anoAtual - anoNasc;
+        try{
+            Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
+          
+            aad.adicionarAluno(tfMatricula.getText(),a, alunos);
+            
+            alunos.add(a);
+           
+
+            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+            Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
+            dtmAlunos.addRow(dados);
+
+        }catch(AlunoException e ){
+           JOptionPane.showMessageDialog(null, "Usuario já existente!");
+     
+        }
+        for(Aluno x : alunos){
+                System.out.println(x);
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
+        EntityManager em = emf.createEntityManager();
+        
+        em.getTransaction().begin();
+        List<Aluno> alunos = em.createQuery("from Aluno", Aluno.class).getResultList();
+        em.getTransaction().commit();
+
+         DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+           dtmAlunos.setRowCount(0);
+
+        for(Aluno x : alunos){
+            String dataString = x.getDataNas().toString(); // Convertendo para String
+            LocalDate dataFormatada = LocalDate.parse(dataString, fmt2);
+            String dataFinal = dataFormatada.format(fmt1);
+
+            
+            Object[] dados = {x.getMatricula(),x.getNome(),x.getIdade(),x.getCpf(),dataFinal,x.getTelefone()};
+            dtmAlunos.addRow(dados);
+        }
+        
+        
+        emf.close();
+        em.close();
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

@@ -1,9 +1,11 @@
-views\ListagemAlunosSDI$1.class
+exceptions\AlunoException.class
 views\TelaPrincipal$1.class
-views\ListagemAlunosSDI.class
 views\TelaPrincipal.class
 views\TelaPrincipal$2.class
 application\Program.class
+org\hibernate\Configuration.class
 views\TelaPrincipal$4.class
+dominio\AdicionarAlunoDAO.class
 dominio\Aluno.class
+dominio\AlunoDAO.class
 views\TelaPrincipal$3.class
