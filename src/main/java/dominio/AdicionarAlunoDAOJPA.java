@@ -5,6 +5,7 @@
 package dominio;
 
 import exceptions.AlunoException;
+import java.time.LocalDate;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,8 +29,17 @@ public class AdicionarAlunoDAOJPA {
        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
         EntityManager em = emf.createEntityManager();
-         List<Aluno> alunos = ListarAlunos();
+        List<Aluno> alunos = ListarAlunos();
+        
+        LocalDate atual = LocalDate.now();
+        
+        if(aluno.getDataNas().getYear() >atual.getYear() || aluno.getDataNas().getMonthValue()>12 
+                || aluno.getDataNas().getMonthValue()<=0 || aluno.getDataNas().getDayOfMonth()>31 || aluno.getDataNas().getDayOfMonth()<=0 ){
+             throw new AlunoException("Data de Nascimento Invalida \n");
 
+        }
+        
+        
         for(Aluno x : a){
             if(x.getMatricula().equals(mat)){
                 throw new AlunoException("Matricula existe! \n");
@@ -40,7 +50,8 @@ public class AdicionarAlunoDAOJPA {
                 throw new AlunoException("Matricula existe! \n");
             }
         }
-        
+      
+      
         em.getTransaction().begin();
         em.persist(aluno);
         em.getTransaction().commit();

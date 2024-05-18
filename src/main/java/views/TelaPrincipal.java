@@ -7,8 +7,10 @@ package views;
 import dominio.AdicionarAlunoDAOJPA;
 import dominio.Aluno;
 import exceptions.AlunoException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -286,14 +288,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+       try{
+           LocalDate data;
+             
+            try {
+                data = LocalDate.parse(tfNascimento.getText(),fmt1);
+                
+                  
+            }catch (DateTimeParseException e) {
+                  JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Por favor, insira novamente.");
+                   return;
+            }
        
-        LocalDate data = LocalDate.parse(tfNascimento.getText(),fmt1);
-        LocalDate atual = LocalDate.now();
-
-        int anoNasc = data.getYear();
-        int anoAtual = atual.getYear();
-        int idade = anoAtual - anoNasc;
-        try{
+          LocalDate atual = LocalDate.now();
+          int anoNasc = data.getYear();
+          int anoAtual = atual.getYear();
+          int idade = anoAtual - anoNasc;
+        
+        
             
             Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
             aad.adicionarAluno(tfMatricula.getText(),a, alunos);
@@ -305,7 +317,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             dtmAlunos.addRow(dados);
 
         }catch(AlunoException e ){
-           JOptionPane.showMessageDialog(null, "Usuario já existente!");
+           JOptionPane.showMessageDialog(null, e.getMessage());
      
         }
         
@@ -342,14 +354,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
         posicao = Integer.parseInt(tfPosicao.getText());
         int position = posicao-1;
         
+try{
+    
+        LocalDate data;
+            try {
+                data = LocalDate.parse(tfNascimento.getText(),fmt1);
+                  
+            }catch (DateTimeParseException e) {
+                  JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Por favor, insira novamente.");
+                   return;
 
-        LocalDate data = LocalDate.parse(tfNascimento.getText(),fmt1);
-        LocalDate atual = LocalDate.now();
-
-        int anoNasc = data.getYear();
-        int anoAtual = atual.getYear();
-        int idade = anoAtual - anoNasc;
-        try{
+            }
+       
+          LocalDate atual = LocalDate.now();
+          int anoNasc = data.getYear();
+          int anoAtual = atual.getYear();
+          int idade = anoAtual - anoNasc;
+        
+       
             
             Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
             alunoBD.add(posicao,a);
@@ -361,9 +383,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             dtmAlunos.insertRow(position, dados);
 
         }catch(AlunoException e ){
-           JOptionPane.showMessageDialog(null, "Usuario já existente!");
+           JOptionPane.showMessageDialog(null, e.getMessage());
      
-        }                                      
+        }                            
 
       
         
