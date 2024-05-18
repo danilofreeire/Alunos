@@ -4,7 +4,7 @@
  */
 package views;
 
-import dominio.AdicionarAlunoDAOJPA;
+import repositorio.AlunoDAOJPA;
 import dominio.Aluno;
 import exceptions.AlunoException;
 import java.time.DateTimeException;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import serviços.AlunoServico;
 
 /**
  *
@@ -23,9 +24,9 @@ import javax.swing.table.DefaultTableModel;
 public class TelaPrincipal extends javax.swing.JFrame {
     DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    AdicionarAlunoDAOJPA aad = new AdicionarAlunoDAOJPA();
+    AlunoServico alunoServico = new AlunoServico();
     List<Aluno> alunos = new ArrayList<>();
-    List<Aluno> alunoBD = aad.ListarAlunos();
+    List<Aluno> alunoBD = AlunoDAOJPA.ListarAlunos();
 
     /**
      * Creates new form TelaPrincipal
@@ -304,11 +305,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
           int anoNasc = data.getYear();
           int anoAtual = atual.getYear();
           int idade = anoAtual - anoNasc;
-        
-        
-            
+       
             Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
-            aad.adicionarAluno(tfMatricula.getText(),a, alunos);
+            alunoServico.adicionar(tfMatricula.getText(),a, alunos);
             alunos.add(a);
             alunoBD.add(a);
 
@@ -326,10 +325,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         
-        
-        
-        
-
         DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
         dtmAlunos.setRowCount(0);
 
@@ -375,7 +370,7 @@ try{
             
             Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
             alunoBD.add(posicao,a);
-            aad.adicionarAluno(tfMatricula.getText(),a, alunos);
+            alunoServico.adicionar(tfMatricula.getText(),a, alunos);
 
             DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
             Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
