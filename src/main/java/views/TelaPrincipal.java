@@ -298,6 +298,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
             aad.adicionarAluno(tfMatricula.getText(),a, alunos);
             alunos.add(a);
+            alunoBD.add(a);
 
             DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
             Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
@@ -315,10 +316,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         
         
-          for(Aluno x : alunoBD){
-                    System.out.println(x);
-                        
-                }
+        
 
         DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
         dtmAlunos.setRowCount(0);
