@@ -4,17 +4,13 @@
  */
 package views;
 
-import dominio.AdicionarAlunoDAO;
+import dominio.AdicionarAlunoDAOJPA;
 import dominio.Aluno;
 import exceptions.AlunoException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,8 +21,9 @@ import javax.swing.table.DefaultTableModel;
 public class TelaPrincipal extends javax.swing.JFrame {
     DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    AdicionarAlunoDAO aad = new AdicionarAlunoDAO();
+    AdicionarAlunoDAOJPA aad = new AdicionarAlunoDAOJPA();
     List<Aluno> alunos = new ArrayList<>();
+    List<Aluno> alunoBD = aad.ListarAlunos();
 
     /**
      * Creates new form TelaPrincipal
@@ -60,10 +57,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tfbutton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        tfPosicao = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbAlunos = new javax.swing.JTable();
@@ -131,10 +129,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jButton3.setText("Pesquisar");
 
-        jButton4.setText("Inserir na Posição");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        tfbutton.setText("Inserir na Posição");
+        tfbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                tfbuttonActionPerformed(evt);
             }
         });
 
@@ -163,36 +161,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfCPF)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfbutton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfPosicao))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(tfMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(tfCPF)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(tfMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(tfNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(tfNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addGap(46, 46, 46))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -222,7 +223,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(tfbutton)
+                    .addComponent(tfPosicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
@@ -285,19 +287,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
        
-            LocalDate data = LocalDate.parse(tfNascimento.getText(),fmt1);
-            LocalDate atual = LocalDate.now();
+        LocalDate data = LocalDate.parse(tfNascimento.getText(),fmt1);
+        LocalDate atual = LocalDate.now();
 
-            int anoNasc = data.getYear();
-            int anoAtual = atual.getYear();
-            int idade = anoAtual - anoNasc;
+        int anoNasc = data.getYear();
+        int anoAtual = atual.getYear();
+        int idade = anoAtual - anoNasc;
         try{
-            Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
-          
-            aad.adicionarAluno(tfMatricula.getText(),a, alunos);
             
+            Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
+            aad.adicionarAluno(tfMatricula.getText(),a, alunos);
             alunos.add(a);
-           
 
             DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
             Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
@@ -307,24 +307,23 @@ public class TelaPrincipal extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Usuario já existente!");
      
         }
-        for(Aluno x : alunos){
-                System.out.println(x);
-            }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
-        EntityManager em = emf.createEntityManager();
         
-        em.getTransaction().begin();
-        List<Aluno> alunos = em.createQuery("from Aluno", Aluno.class).getResultList();
-        em.getTransaction().commit();
+        
+        
+          for(Aluno x : alunoBD){
+                    System.out.println(x);
+                        
+                }
 
-         DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
-           dtmAlunos.setRowCount(0);
+        DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+        dtmAlunos.setRowCount(0);
 
-        for(Aluno x : alunos){
+        for(Aluno x : alunoBD){
             String dataString = x.getDataNas().toString(); // Convertendo para String
             LocalDate dataFormatada = LocalDate.parse(dataString, fmt2);
             String dataFinal = dataFormatada.format(fmt1);
@@ -335,14 +334,42 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         
         
-        emf.close();
-        em.close();
+       
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void tfbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfbuttonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        int posicao = 0;
+        posicao = Integer.parseInt(tfPosicao.getText());
+        int position = posicao-1;
+        
+
+        LocalDate data = LocalDate.parse(tfNascimento.getText(),fmt1);
+        LocalDate atual = LocalDate.now();
+
+        int anoNasc = data.getYear();
+        int anoAtual = atual.getYear();
+        int idade = anoAtual - anoNasc;
+        try{
+            
+            Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
+            alunoBD.add(posicao,a);
+            aad.adicionarAluno(tfMatricula.getText(),a, alunos);
+
+            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+            Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
+           
+            dtmAlunos.insertRow(position, dados);
+
+        }catch(AlunoException e ){
+           JOptionPane.showMessageDialog(null, "Usuario já existente!");
+     
+        }                                      
+
+      
+        
+    }//GEN-LAST:event_tfbuttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -383,7 +410,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
@@ -402,6 +428,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField tfMatricula;
     private javax.swing.JFormattedTextField tfNascimento;
     private javax.swing.JFormattedTextField tfNome;
+    private javax.swing.JFormattedTextField tfPosicao;
     private javax.swing.JFormattedTextField tfTelefone;
+    private javax.swing.JButton tfbutton;
     // End of variables declaration//GEN-END:variables
 }
