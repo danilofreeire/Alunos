@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package serviços;
+package servicos;
 
 import dominio.Aluno;
 import exceptions.AlunoException;
@@ -14,15 +14,19 @@ import repositorio.AlunoDAOJPA;
  *
  * @author DANILO
  */
-public class AlunoServico implements AlunoDAO {
+public class AlunoServico {
 
+    
+    private static AlunoDAOJPA aad=new AlunoDAOJPA();
+    
     public AlunoServico() {
+        
     }
     
-    @Override
+   
     public void adicionar(String mat, Aluno aluno, List<Aluno> a) throws AlunoException{
-
-        List<Aluno> alunos = AlunoDAOJPA.ListarAlunos();
+        
+        List<Aluno> alunos = aad.ListarAlunos();
         LocalDate atual = LocalDate.now();
         
         if(aluno.getDataNas().getYear() >atual.getYear() || aluno.getDataNas().getMonthValue()>12 
@@ -42,13 +46,13 @@ public class AlunoServico implements AlunoDAO {
                 throw new AlunoException("Matricula existe! \n");
             }
         }
-        AlunoDAOJPA.adicionarAluno(mat, aluno, a);
+        aad.adicionarAluno(mat, aluno, a);
     }
 
     
-    @Override
+ 
     public List<Aluno> ListarAlunos() {
-        return AlunoDAOJPA.ListarAlunos();
+        return aad.ListarAlunos();
     }
     
     

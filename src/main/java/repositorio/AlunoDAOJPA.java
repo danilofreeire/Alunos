@@ -5,16 +5,13 @@
 package repositorio;
 
 import dominio.Aluno;
-import exceptions.AlunoException;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import interfaces.AlunoDAO;
 
 
 
@@ -22,7 +19,7 @@ import javax.persistence.PersistenceException;
  *
  * @author DANILO
  */
-public class AlunoDAOJPA {
+public class AlunoDAOJPA implements AlunoDAO{
     
     
     
@@ -30,7 +27,8 @@ public class AlunoDAOJPA {
     }
     
     
-    public static void adicionarAluno(String mat, Aluno aluno, List<Aluno> a) {
+    @Override
+    public void adicionarAluno(String mat, Aluno aluno, List<Aluno> a) {
        
         EntityManagerFactory emf = null;
         EntityManager em = null;
@@ -59,7 +57,8 @@ public class AlunoDAOJPA {
       
         
     }
-    public static List<Aluno> ListarAlunos(){
+    @Override
+    public List<Aluno> ListarAlunos(){
         EntityManagerFactory emf = null;
         EntityManager em = null;
         List<Aluno> alunos = new ArrayList<>();
