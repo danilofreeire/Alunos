@@ -134,6 +134,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jButton3.setText("Pesquisar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         tfbutton.setText("Inserir na Posição");
         tfbutton.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +155,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jButton6.setText("Novo/Velho");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Salvar CSV");
 
@@ -434,6 +444,63 @@ try{
            JOptionPane.showMessageDialog(null, ex.getMessage());
       }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        // Botão para Pesquisar Aluno:
+        try {
+            String mat = tfMatricula.getText();
+
+            if (mat.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Preencha o campo de matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
+              return;
+            }
+            
+            List<Aluno> alunos = alunoServico.pesquisarAluno(mat);
+            
+            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+            dtmAlunos.setRowCount(0);
+            
+            for (Aluno x : alunos) {
+                Object[] rowData = {x.getMatricula(), x.getNome(), x.getIdade(), x.getDataNas(), x.getTelefone(), x.getCpf()};
+                dtmAlunos.addRow(rowData);  
+            }  
+                if (alunos.isEmpty()) {
+                     JOptionPane.showMessageDialog(null, "Nenhum aluno encontrado com a matrícula fornecida.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                }
+      
+        } catch (Exception ex) {
+             JOptionPane.showMessageDialog(null, ex.getMessage());
+         }
+
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        // Botão Velho/Novo
+        
+        try {
+            List<Aluno> alunos = alunoServico.velhoNovoAluno();
+            
+            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+            dtmAlunos.setRowCount(0);
+            
+            for (Aluno x : alunos) {
+                String dataString = x.getDataNas() != null ? x.getDataNas().toString() : "Data de nascimento não disponível";
+                Object[] dados = {x.getMatricula(), x.getNome(), x.getIdade(), x.getCpf(), dataString, x.getTelefone()};
+                dtmAlunos.addRow(dados);
+            }
+            
+            if (alunos.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nenhum aluno encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jButton6ActionPerformed
      
     /**
      * @param args the command line arguments

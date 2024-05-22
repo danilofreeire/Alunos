@@ -74,6 +74,28 @@ public class AlunoServico {
     }
     
     
-    
+    public List<Aluno> pesquisarAluno(String mat) throws AlunoException {
+        List<Aluno> alunos = aad.ListarAlunos();
+        
+        if (alunos == null) {
+            throw new AlunoException("Não existem alunos cadastrados.\n");
+        }
+      
+        return aad.pesquisarAluno(mat);
+    }
+
+    public List<Aluno> velhoNovoAluno() throws AlunoException {
+        // Se tiver apenas 1 aluno, a pesquisa de velhoNovoAluno ainda funciona
+        
+        List<Aluno> alunos = aad.ListarAlunos();
+
+        if (alunos.isEmpty()) {
+            throw new AlunoException("Não existem alunos cadastrados.\n");
+
+        }
+       
+        return aad.velhoNovoAluno();
+    }
+
     
 }

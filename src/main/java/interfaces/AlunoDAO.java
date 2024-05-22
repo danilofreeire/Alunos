@@ -18,4 +18,6 @@ public interface AlunoDAO {
     public void adicionarAluno(String mat, Aluno aluno, List<Aluno> a)throws AlunoException;
     public List<Aluno> ListarAlunos();
     public void removerAluno(String mat) throws AlunoException;
+    public List<Aluno> pesquisarAluno(String mat);
+    public List<Aluno> velhoNovoAluno();   
 }
