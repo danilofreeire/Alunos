@@ -19,11 +19,11 @@ import interfaces.AlunoDAO;
  *
  * @author DANILO
  */
-public class AlunoDAOJPA implements AlunoDAO{
+public class AlunoDAOSQL implements AlunoDAO{
     
     
     
-    public AlunoDAOJPA() {
+    public AlunoDAOSQL() {
     }
     
     
@@ -94,9 +94,10 @@ public class AlunoDAOJPA implements AlunoDAO{
         try {
             emf = Persistence.createEntityManagerFactory("exemplo-jpa");
             em = emf.createEntityManager();
-            
+            //peguei o aluno a partir da matricula
+            Aluno aluno = em.find(Aluno.class, mat);
+            //removi o aluno
             em.getTransaction().begin();
-            Aluno aluno = em.createQuery("SELECT a FROM Aluno a WHERE a.matricula = :matricula", Aluno.class).setParameter("matricula", mat).getSingleResult();
             em.remove(aluno);
             em.getTransaction().commit();
     

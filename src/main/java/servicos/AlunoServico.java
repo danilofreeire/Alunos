@@ -8,7 +8,7 @@ import dominio.Aluno;
 import exceptions.AlunoException;
 import java.time.LocalDate;
 import java.util.List;
-import repositorio.AlunoDAOJPA;
+import repositorio.AlunoDAOSQL;
 
 /**
  *
@@ -17,7 +17,7 @@ import repositorio.AlunoDAOJPA;
 public class AlunoServico {
 
     
-    private static AlunoDAOJPA aad=new AlunoDAOJPA();
+    private static AlunoDAOSQL aad=new AlunoDAOSQL();
     
     public AlunoServico() {
         

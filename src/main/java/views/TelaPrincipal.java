@@ -402,19 +402,16 @@ try{
                return;
            }
         
-             alunoServico.removerAluno(matricula);
+            alunoServico.removerAluno(matricula);
         
-             boolean remocaoDoAluno = false;
-        
+            //Tirei o if() e else que tinha aqui    
             for (int i = 0; i < alunos.size(); i++) {
                  if (alunos.get(i).getMatricula().equals(matricula)) {
                       alunos.remove(i);
-                      remocaoDoAluno = true;
                       break;
                 }
             }
-        
-       if (remocaoDoAluno) {
+               
             // Removendo o aluno do banco de dados simulado (ou real, dependendo da sua implementação)
             for (int i = 0; i < alunoBD.size(); i++) {
                 if (alunoBD.get(i).getMatricula().equals(matricula)) {
@@ -430,20 +427,11 @@ try{
                     break;
                 }
             }
-            JOptionPane.showMessageDialog(null, "Aluno removido com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "Aluno não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
-       }
-       
-       
-        
         
       } catch (AlunoException ex) {
-         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);         
+           JOptionPane.showMessageDialog(null, ex.getMessage());
       } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "Erro desconhecido: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null, ex.getMessage());
       }
     }//GEN-LAST:event_jButton2ActionPerformed
      
