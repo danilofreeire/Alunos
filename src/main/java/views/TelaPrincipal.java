@@ -127,6 +127,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jButton2.setText("Excluir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Pesquisar");
 
@@ -384,6 +389,64 @@ try{
         
     }//GEN-LAST:event_tfbuttonActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        /* Botão de exclusão: 1-> Declaração de variáveis; 2-> Recebe os dados do usuário;
+        3-> Transferir para a DTO; 4-> Executar a DAO.
+        */
+        try {
+            String matricula = tfMatricula.getText();
+
+            if(matricula.isEmpty()) {
+              JOptionPane.showMessageDialog(null, "Preencha o campo de matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
+               return;
+           }
+        
+             alunoServico.removerAluno(matricula);
+        
+             boolean remocaoDoAluno = false;
+        
+            for (int i = 0; i < alunos.size(); i++) {
+                 if (alunos.get(i).getMatricula().equals(matricula)) {
+                      alunos.remove(i);
+                      remocaoDoAluno = true;
+                      break;
+                }
+            }
+        
+       if (remocaoDoAluno) {
+            // Removendo o aluno do banco de dados simulado (ou real, dependendo da sua implementação)
+            for (int i = 0; i < alunoBD.size(); i++) {
+                if (alunoBD.get(i).getMatricula().equals(matricula)) {
+                    alunoBD.remove(i);
+                    break;
+                }
+            }
+        
+        DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+            for (int i = 0; i < dtmAlunos.getRowCount(); i++) {
+                if (dtmAlunos.getValueAt(i, 0).equals(matricula)) {
+                    dtmAlunos.removeRow(i);
+                    break;
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Aluno removido com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Aluno não encontrado.", "Erro", JOptionPane.ERROR_MESSAGE);
+       }
+       
+       
+        
+        
+      } catch (AlunoException ex) {
+         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);         
+      } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "Erro desconhecido: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+      }
+    }//GEN-LAST:event_jButton2ActionPerformed
+     
     /**
      * @param args the command line arguments
      */

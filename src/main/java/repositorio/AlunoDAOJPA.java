@@ -42,7 +42,7 @@ public class AlunoDAOJPA implements AlunoDAO{
             em.getTransaction().commit();
             
         }catch(PersistenceException e){
-                        System.out.println("ERROR "+ e.getMessage());
+            System.out.println("ERROR "+ e.getMessage());
 
         }finally {
             if (em != null) {
@@ -86,5 +86,31 @@ public class AlunoDAOJPA implements AlunoDAO{
         
     }
     
+    @Override
+    public void removerAluno (String mat) {
+        EntityManagerFactory emf = null;
+        EntityManager em = null;
+       
+        try {
+            emf = Persistence.createEntityManagerFactory("exemplo-jpa");
+            em = emf.createEntityManager();
+            
+            em.getTransaction().begin();
+            Aluno aluno = em.createQuery("SELECT a FROM Aluno a WHERE a.matricula = :matricula", Aluno.class).setParameter("matricula", mat).getSingleResult();
+            em.remove(aluno);
+            em.getTransaction().commit();
+    
+        } catch(PersistenceException e) {
+            System.out.println("ERROR "+ e.getMessage());
+        } finally {
+            if (em != null) {
+                em.close(); 
+            }
+            if (emf != null) {
+                emf.close();
+            }
+        }
+            
+    }
     
 }

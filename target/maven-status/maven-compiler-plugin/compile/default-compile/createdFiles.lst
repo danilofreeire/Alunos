@@ -3,10 +3,11 @@ views\TelaPrincipal$1.class
 servicos\AlunoServico.class
 views\TelaPrincipal.class
 views\TelaPrincipal$2.class
-dominio\Aluno.class
 interfaces\AlunoDAO.class
 views\TelaPrincipal$3.class
 application\Program.class
+dominio\DTO\Aluno.class
 org\hibernate\Configuration.class
 views\TelaPrincipal$4.class
-repositorio\AlunoDAOJPA.class
+repositorio\DAO\AlunoDAOJPA.class
+views\TelaPrincipal$5.class

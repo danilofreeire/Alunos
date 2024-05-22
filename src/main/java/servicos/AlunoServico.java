@@ -49,13 +49,29 @@ public class AlunoServico {
         aad.adicionarAluno(mat, aluno, a);
     }
 
-    
+   
  
     public List<Aluno> ListarAlunos() {
         return aad.ListarAlunos();
     }
     
-    
+    public void removerAluno (String mat) throws AlunoException {
+        List<Aluno> alunos = aad.ListarAlunos();
+        boolean i = false;
+        
+        for (Aluno x : alunos) {
+            if (x.getMatricula().equals(mat)) {
+                i = true;
+                break;
+            }
+        }
+        
+        if(!i) {
+            throw new AlunoException("Matricula não existe.\n");
+        }
+        
+        aad.removerAluno(mat);
+    }
     
     
     
