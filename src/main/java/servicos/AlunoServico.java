@@ -96,6 +96,12 @@ public class AlunoServico {
        
         return aad.velhoNovoAluno();
     }
-
+    public void salvarCSV()throws AlunoException{
+        List<Aluno> a = aad.ListarAlunos();
+        if(!aad.salvarCSV(a)){
+             throw new AlunoException("Não foi possível salvar o CSV.\n");
+        }
+        
+    }
     
 }

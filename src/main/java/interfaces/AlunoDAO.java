@@ -20,4 +20,6 @@ public interface AlunoDAO {
     public void removerAluno(String mat) throws AlunoException;
     public List<Aluno> pesquisarAluno(String mat);
     public List<Aluno> velhoNovoAluno();   
+    public boolean salvarCSV(List<Aluno>alunos);
+
 }

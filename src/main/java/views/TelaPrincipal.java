@@ -162,6 +162,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
 
         jButton7.setText("Salvar CSV");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -501,6 +506,18 @@ try{
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        try{ 
+            alunoServico.salvarCSV();
+            JOptionPane.showMessageDialog(null, "Arquivo Salvo no caminho: c:\\temp\\alunos.csv");
+
+        }catch(AlunoException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
      
     /**
      * @param args the command line arguments

@@ -12,7 +12,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import interfaces.AlunoDAO;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 
 
@@ -199,5 +206,43 @@ public class AlunoDAOSQL implements AlunoDAO{
         return resultadoBusca;          
         
     }
+    @Override
+    public boolean salvarCSV(List<Aluno> alunos){
+        DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+
+        boolean sucess= new File("c:\\temp").mkdir();
+        File file = new File("c:\\temp\\alunos.csv");
+        
+        List<String> dados = alunos.stream()
+        .map(a -> String.join(",",
+            a.getMatricula(),
+            a.getNome().toUpperCase(),
+            a.getTelefone(),
+            a.getCpf(),
+            String.valueOf(a.getIdade()),
+            a.getDataNas().format(fmt1)
+        ))
+        .collect(Collectors.toList());
+        String header = "Matricula,Nome,Telefone,CPF,Idade,Data de Nascimento";
+
+        
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file ))){
+            bw.write(header);
+             bw.newLine();
+            for(String dado : dados) {
+                    bw.write(dado);
+                    bw.newLine();
+            }
+        }
+        catch(IOException e) {
+                e.printStackTrace();
+                  return false;
+
+        }
+        return true;
+
+    }
+
 
 }
