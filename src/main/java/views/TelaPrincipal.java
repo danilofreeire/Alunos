@@ -327,6 +327,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
             alunoServico.adicionar(tfMatricula.getText(),a, alunos);
             alunos.add(a);
+            
             alunoBD.add(a);
 
             DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
@@ -343,19 +344,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         
-        DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
-        dtmAlunos.setRowCount(0);
-
-        for(Aluno x : alunoBD){
-            String dataString = x.getDataNas().toString(); // Convertendo para String
-            LocalDate dataFormatada = LocalDate.parse(dataString, fmt2);
-            String dataFinal = dataFormatada.format(fmt1);
-
-            
-            Object[] dados = {x.getMatricula(),x.getNome(),x.getIdade(),x.getCpf(),dataFinal,x.getTelefone()};
-            dtmAlunos.addRow(dados);
-        }
         
+
+        Tabela tabela = new Tabela(alunoBD);
+        tabela.setVisible(true);
         
        
         
@@ -367,7 +359,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         posicao = Integer.parseInt(tfPosicao.getText());
         int position = posicao-1;
         
-try{
+        try{
     
         LocalDate data;
             try {
