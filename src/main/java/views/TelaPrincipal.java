@@ -20,10 +20,11 @@ import servicos.AlunoServico;
  * @author DANILO
  */
 public class TelaPrincipal extends javax.swing.JFrame {
+
     DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     AlunoServico alunoServico = new AlunoServico();
-    List<Aluno> alunos = new ArrayList<>();
+   // List<Aluno> alunos = new ArrayList<>();
     List<Aluno> alunoBD = alunoServico.ListarAlunos();
 
     /**
@@ -307,118 +308,111 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       try{
-           LocalDate data;
-             
+        try {
+            LocalDate data;
+
             try {
-                data = LocalDate.parse(tfNascimento.getText(),fmt1);
-                
-                  
-            }catch (DateTimeParseException e) {
-                  JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Por favor, insira novamente.");
-                   return;
+                data = LocalDate.parse(tfNascimento.getText(), fmt1);
+
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Por favor, insira novamente.");
+                return;
             }
-       
-          LocalDate atual = LocalDate.now();
-          int anoNasc = data.getYear();
-          int anoAtual = atual.getYear();
-          int idade = anoAtual - anoNasc;
-       
-            Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
-            alunoServico.adicionar(tfMatricula.getText(),a, alunos);
-            alunos.add(a);
-            
+
+            LocalDate atual = LocalDate.now();
+            int anoNasc = data.getYear();
+            int anoAtual = atual.getYear();
+            int idade = anoAtual - anoNasc;
+
+            Aluno a = new Aluno(tfMatricula.getText(), tfNome.getText(), idade, data, tfTelefone.getText(), tfCPF.getText());
+            alunoServico.adicionar(tfMatricula.getText(), a);
+          //  alunos.add(a);
+
             alunoBD.add(a);
 
-            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
-            Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
-            dtmAlunos.addRow(dados);
+           // DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+         //  Object[] dados = {tfMatricula.getText(), tfNome.getText(), idade, tfCPF.getText(), tfNascimento.getText(), tfTelefone.getText()};
+          //  dtmAlunos.addRow(dados);
 
-        }catch(AlunoException e ){
-           JOptionPane.showMessageDialog(null, e.getMessage());
-     
+        } catch (AlunoException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        
-        
 
         Tabela tabela = new Tabela(alunoBD);
         tabela.setVisible(true);
-        
-       
-        
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tfbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfbuttonActionPerformed
         // TODO add your handling code here:
         int posicao = 0;
         posicao = Integer.parseInt(tfPosicao.getText());
-        int position = posicao-1;
-        
-        try{
-    
-        LocalDate data;
+        int position = posicao - 1;
+
+        try {
+
+            LocalDate data;
             try {
-                data = LocalDate.parse(tfNascimento.getText(),fmt1);
-                  
-            }catch (DateTimeParseException e) {
-                  JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Por favor, insira novamente.");
-                   return;
+                data = LocalDate.parse(tfNascimento.getText(), fmt1);
+
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Por favor, insira novamente.");
+                return;
 
             }
-       
-          LocalDate atual = LocalDate.now();
-          int anoNasc = data.getYear();
-          int anoAtual = atual.getYear();
-          int idade = anoAtual - anoNasc;
-        
-       
+
+            LocalDate atual = LocalDate.now();
+            int anoNasc = data.getYear();
+            int anoAtual = atual.getYear();
+            int idade = anoAtual - anoNasc;
+
+            Aluno a = new Aluno(tfMatricula.getText(), tfNome.getText(), idade, data, tfTelefone.getText(), tfCPF.getText());
+            alunoServico.adicionar(tfMatricula.getText(), a);
+            alunoBD.add(position,a);
+          //  alunos.add(a);
+
+
             
-            Aluno a = new Aluno(tfMatricula.getText(),tfNome.getText(),idade,data,tfTelefone.getText(),tfCPF.getText());
-            alunoBD.add(posicao,a);
-            alunoServico.adicionar(tfMatricula.getText(),a, alunos);
+          
 
-            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
-            Object[] dados = {tfMatricula.getText(),tfNome.getText(),idade,tfCPF.getText(),tfNascimento.getText(),tfTelefone.getText()};
-           
-            dtmAlunos.insertRow(position, dados);
+        } catch (AlunoException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
 
-        }catch(AlunoException e ){
-           JOptionPane.showMessageDialog(null, e.getMessage());
-     
-        }                            
+        }
 
-      
-        
+
     }//GEN-LAST:event_tfbuttonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         /* Botão de exclusão: 1-> Declaração de variáveis; 2-> Recebe os dados do usuário;
         3-> Transferir para a DTO; 4-> Executar a DAO.
-        */
+         */
         try {
             String matricula = tfMatricula.getText();
 
-            if(matricula.isEmpty()) {
-              JOptionPane.showMessageDialog(null, "Preencha o campo de matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
-               return;
-           }
-        
-            alunoServico.removerAluno(matricula);
-        
-            //Tirei o if() e else que tinha aqui    
-            for (int i = 0; i < alunos.size(); i++) {
-                 if (alunos.get(i).getMatricula().equals(matricula)) {
-                      alunos.remove(i);
-                      break;
-                }
+            if (matricula.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Preencha o campo de matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-               
+
+            alunoServico.removerAluno(matricula);
+
+            //Tirei o if() e else que tinha aqui    
+    //        for (int i = 0; i < alunos.size(); i++) {
+        //        if (alunos.get(i).getMatricula().equals(matricula)) {
+         //           alunos.remove(i);
+        //            break;
+     //           }
+    //        }
+
             // Removendo o aluno do banco de dados simulado (ou real, dependendo da sua implementação)
             for (int i = 0; i < alunoBD.size(); i++) {
                 if (alunoBD.get(i).getMatricula().equals(matricula)) {
@@ -426,20 +420,20 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     break;
                 }
             }
-        
-        DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
+
+            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
             for (int i = 0; i < dtmAlunos.getRowCount(); i++) {
                 if (dtmAlunos.getValueAt(i, 0).equals(matricula)) {
                     dtmAlunos.removeRow(i);
                     break;
                 }
             }
-        
-      } catch (AlunoException ex) {
-           JOptionPane.showMessageDialog(null, ex.getMessage());
-      } catch (Exception ex) {
-           JOptionPane.showMessageDialog(null, ex.getMessage());
-      }
+
+        } catch (AlunoException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -449,68 +443,63 @@ public class TelaPrincipal extends javax.swing.JFrame {
             String mat = tfMatricula.getText();
 
             if (mat.isEmpty()) {
-              JOptionPane.showMessageDialog(null, "Preencha o campo de matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
-              return;
+                JOptionPane.showMessageDialog(null, "Preencha o campo de matrícula.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-            
-            List<Aluno> alunos = alunoServico.pesquisarAluno(mat);
-            
+
+            Aluno x = alunoServico.pesquisarAluno(mat);
+
             DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
             dtmAlunos.setRowCount(0);
             
-            for (Aluno x : alunos) {
-                Object[] rowData = {x.getMatricula(), x.getNome(), x.getIdade(), x.getDataNas(), x.getTelefone(), x.getCpf()};
-                dtmAlunos.addRow(rowData);  
-            }  
-                if (alunos.isEmpty()) {
-                     JOptionPane.showMessageDialog(null, "Nenhum aluno encontrado com a matrícula fornecida.", "Informação", JOptionPane.INFORMATION_MESSAGE);
-                }
-      
+            Object[] rowData = {x.getMatricula(), x.getNome(), x.getIdade(), x.getDataNas(), x.getTelefone(), x.getCpf()};
+            dtmAlunos.addRow(rowData);
+            JOptionPane.showMessageDialog(null, "Quantidade de alunos: "+ alunoBD.stream().count());
+
         } catch (Exception ex) {
-             JOptionPane.showMessageDialog(null, ex.getMessage());
-         }
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         // Botão Velho/Novo
-        
+
         try {
             List<Aluno> alunos = alunoServico.velhoNovoAluno();
-            
+
             DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
             dtmAlunos.setRowCount(0);
-            
+
             for (Aluno x : alunos) {
                 String dataString = x.getDataNas() != null ? x.getDataNas().toString() : "Data de nascimento não disponível";
                 Object[] dados = {x.getMatricula(), x.getNome(), x.getIdade(), x.getCpf(), dataString, x.getTelefone()};
                 dtmAlunos.addRow(dados);
             }
-            
+
             if (alunos.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Nenhum aluno encontrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
             }
-            
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-        
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        try{ 
+        try {
             alunoServico.salvarCSV();
             JOptionPane.showMessageDialog(null, "Arquivo Salvo no caminho: c:\\temp\\alunos.csv");
 
-        }catch(AlunoException e){
+        } catch (AlunoException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
 
         }
     }//GEN-LAST:event_jButton7ActionPerformed
-     
+
     /**
      * @param args the command line arguments
      */

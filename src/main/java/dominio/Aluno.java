@@ -11,15 +11,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
-
-    /**
+/**
  *
  * @author DANILO
  */
 @Entity
 public class Aluno implements Serializable {
+
     private static final long serialVersion = 1L;
 
+    
     @Id
     private String matricula;
     private String nome;
@@ -27,13 +28,12 @@ public class Aluno implements Serializable {
     private LocalDate dataNas;
     private String telefone;
     private String cpf;
-    
-    public Aluno(){
-        
+
+    public Aluno() {
+
     }
 
-    
-    public Aluno(String matricula, String nome,Integer idade, LocalDate dataNas, String telefone, String cpf) {
+    public Aluno(String matricula, String nome, Integer idade, LocalDate dataNas, String telefone, String cpf) {
         this.matricula = matricula;
         this.nome = nome;
         this.idade = idade;
@@ -66,7 +66,6 @@ public class Aluno implements Serializable {
         this.idade = idade;
     }
 
- 
     public LocalDate getDataNas() {
         return dataNas;
     }
@@ -90,12 +89,10 @@ public class Aluno implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
 
     @Override
     public String toString() {
         return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", dataNas=" + dataNas + ", telefone=" + telefone + ", cpf=" + cpf + '}';
     }
-    
-    
+
 }

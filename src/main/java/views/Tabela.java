@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import servicos.AlunoServico;
 
 
 /**
@@ -21,43 +20,37 @@ public class Tabela extends javax.swing.JFrame {
     /**
      * Creates new form Tabela
      */
-  
     DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     
-    public Tabela(){
-                initComponents();
+    public Tabela() {
+        initComponents();
 
     }
-    public Tabela(List<Aluno> aluno, int i){
-        
+
+    public Tabela(List<Aluno> aluno, int i, Aluno x) {
+
         initComponents();
         DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
         dtmAlunos.setRowCount(0);
-        for(Aluno x : aluno){
-            Object[] dados = {x.getMatricula(),x.getNome(),x.getIdade(),x.getCpf(),x.getDataNas(),x.getTelefone()};
-            
-            dtmAlunos.insertRow(i,dados);
-        }
+        Object[] dados = {x.getMatricula(), x.getNome(), x.getIdade(), x.getCpf(), x.getDataNas(), x.getTelefone()};
+        dtmAlunos.insertRow(i, dados);
+        
     }
-    
-    
-    
-    
+
     public Tabela(List<Aluno> aluno) {
-   
+
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);  // Fechar apenas este formulário
         DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
         dtmAlunos.setRowCount(0);
-        
-        for(Aluno x : aluno){
+
+        for (Aluno x : aluno) {
             String dataString = x.getDataNas().toString(); // Convertendo para String
             LocalDate dataFormatada = LocalDate.parse(dataString, fmt2);
             String dataFinal = dataFormatada.format(fmt1);
 
-            
-            Object[] dados = {x.getMatricula(),x.getNome(),x.getIdade(),x.getCpf(),dataFinal,x.getTelefone()};
+            Object[] dados = {x.getMatricula(), x.getNome(), x.getIdade(), x.getCpf(), dataFinal, x.getTelefone()};
             dtmAlunos.addRow(dados);
         }
     }
@@ -135,7 +128,6 @@ public class Tabela extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
