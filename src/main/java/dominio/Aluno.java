@@ -1,26 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dominio;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
-/**
- *
- * @author DANILO
- */
 @Entity
 public class Aluno implements Serializable {
 
     private static final long serialVersion = 1L;
 
-    
     @Id
     private String matricula;
     private String nome;

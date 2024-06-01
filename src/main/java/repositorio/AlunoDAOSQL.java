@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package repositorio;
 
 import dominio.Aluno;
@@ -16,15 +12,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author DANILO
- */
 public class AlunoDAOSQL implements AlunoDAO {
 
     public AlunoDAOSQL() {
@@ -94,9 +85,7 @@ public class AlunoDAOSQL implements AlunoDAO {
         try {
             emf = Persistence.createEntityManagerFactory("exemplo-jpa");
             em = emf.createEntityManager();
-            //peguei o aluno a partir da matricula
             Aluno aluno = em.find(Aluno.class, mat);
-            //removi o aluno
             em.getTransaction().begin();
             em.remove(aluno);
             em.getTransaction().commit();
@@ -125,8 +114,6 @@ public class AlunoDAOSQL implements AlunoDAO {
             em.getTransaction().begin();
 
             aluno = em.find(Aluno.class, mat);
-
- 
 
             em.getTransaction().commit();
 
@@ -207,14 +194,12 @@ public class AlunoDAOSQL implements AlunoDAO {
         File file = new File("c:\\temp\\alunos.csv");
 
         List<String> dados = alunos.stream()
-                .map(a -> String.join(",",
-                a.getMatricula(),
-                a.getNome().toUpperCase(),
-                a.getTelefone(),
-                a.getCpf(),
-                String.valueOf(a.getIdade()),
-                a.getDataNas().format(fmt1)
-        ))
+                .map(a -> a.getMatricula() + ", "
+                + a.getNome().toUpperCase() + "     ;"
+                + a.getIdade() + ";"
+                + a.getDataNas().format(fmt1) + "; "
+                + a.getTelefone() + ";"
+                + a.getCpf())
                 .collect(Collectors.toList());
         String header = "Matricula,Nome,Telefone,CPF,Idade,Data de Nascimento";
 

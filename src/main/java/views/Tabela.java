@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package views;
 
 import dominio.Aluno;
@@ -11,18 +8,12 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-/**
- *
- * @author DANILO
- */
 public class Tabela extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Tabela
-     */
+   
     DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter fmt2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    
+
     public Tabela() {
         initComponents();
 
@@ -35,7 +26,7 @@ public class Tabela extends javax.swing.JFrame {
         dtmAlunos.setRowCount(0);
         Object[] dados = {x.getMatricula(), x.getNome(), x.getIdade(), x.getCpf(), x.getDataNas(), x.getTelefone()};
         dtmAlunos.insertRow(i, dados);
-        
+
     }
 
     public Tabela(List<Aluno> aluno) {

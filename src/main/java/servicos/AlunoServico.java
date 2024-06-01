@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package servicos;
 
 import dominio.Aluno;
@@ -10,13 +6,9 @@ import java.time.LocalDate;
 import java.util.List;
 import repositorio.AlunoDAOSQL;
 
-/**
- *
- * @author DANILO
- */
 public class AlunoServico {
 
-    private static AlunoDAOSQL aad = new AlunoDAOSQL();
+    private static final AlunoDAOSQL aad = new AlunoDAOSQL();
 
     public AlunoServico() {
 
@@ -32,13 +24,7 @@ public class AlunoServico {
                 || aluno.getDataNas().getDayOfMonth() <= 0) {
             throw new AlunoException("Data de Nascimento Invalida \n");
         }
-/*
-        for (Aluno x : a) {
-            if (x.getMatricula().equals(mat)) {
-                throw new AlunoException("Matricula existe! \n");
-            }
-        }
-/-*/
+
         for (Aluno x : alunos) {
             if (x.getMatricula().equals(mat)) {
                 throw new AlunoException("Matricula existe! \n");
@@ -72,24 +58,23 @@ public class AlunoServico {
     public Aluno pesquisarAluno(String mat) throws AlunoException {
         List<Aluno> alunos = aad.ListarAlunos();
 
-    if (mat == null || mat.isEmpty()) {
-        throw new AlunoException("Matricula Invalida.\n");
-    }
-    
-    if (alunos == null || alunos.isEmpty()) {
-        throw new AlunoException("Não existem alunos cadastrados.\n");
-    }
+        if (mat == null || mat.isEmpty()) {
+            throw new AlunoException("Matricula Invalida.\n");
+        }
 
-    Aluno aluno = aad.pesquisarAluno(mat);
-    if (aluno == null) {
-        throw new AlunoException("Aluno não encontrado.\n");
-    }
-    
-    return aluno;
+        if (alunos == null || alunos.isEmpty()) {
+            throw new AlunoException("Não existem alunos cadastrados.\n");
+        }
+
+        Aluno aluno = aad.pesquisarAluno(mat);
+        if (aluno == null) {
+            throw new AlunoException("Aluno não encontrado.\n");
+        }
+
+        return aluno;
     }
 
     public List<Aluno> velhoNovoAluno() throws AlunoException {
-        // Se tiver apenas 1 aluno, a pesquisa de velhoNovoAluno ainda funciona
 
         List<Aluno> alunos = aad.ListarAlunos();
 
