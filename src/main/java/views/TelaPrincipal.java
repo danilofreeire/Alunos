@@ -290,7 +290,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-           //  BOTÃO ADICIONAR
+        //  BOTÃO ADICIONAR
         try {
             LocalDate data;
 
@@ -329,12 +329,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void tfbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfbuttonActionPerformed
-            // BOTÃO DE INSERIR EM UMA POSIÇÃO
-        int posicao = 0;
-        posicao = Integer.parseInt(tfPosicao.getText());
-        int position = posicao - 1;
+        // BOTÃO DE INSERIR EM UMA POSIÇÃO
 
         try {
+
+            int posicao = Integer.parseInt(tfPosicao.getText());
+            int position = posicao - 1;
+
+            if (position < 0 || position > alunoBD.size()) {
+                JOptionPane.showMessageDialog(null, "Posição Inválida.");
+                return;
+            }
 
             LocalDate data;
             try {
@@ -354,17 +359,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
             Aluno a = new Aluno(tfMatricula.getText(), tfNome.getText(), idade, data, tfTelefone.getText(), tfCPF.getText());
             alunoServico.adicionar(tfMatricula.getText(), a);
             alunoBD.add(position, a);
-
+            JOptionPane.showMessageDialog(null, "Aluno: " + tfNome.getText() + " | Matricula: " + tfMatricula.getText()
+                    + " inserido na posição: " + tfPosicao.getText());
+            
         } catch (AlunoException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Posição deve ser um número válido.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Posição Inválida.");
         }
-
 
     }//GEN-LAST:event_tfbuttonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            // BOTÃO DE EXCLUIR
+        // BOTÃO DE EXCLUIR
         try {
             String matricula = tfMatricula.getText();
 
@@ -382,13 +391,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 }
             }
 
-            DefaultTableModel dtmAlunos = (DefaultTableModel) tbAlunos.getModel();
-            for (int i = 0; i < dtmAlunos.getRowCount(); i++) {
-                if (dtmAlunos.getValueAt(i, 0).equals(matricula)) {
-                    dtmAlunos.removeRow(i);
-                    break;
-                }
-            }
             JOptionPane.showMessageDialog(null, "Aluno removido com sucesso!");
 
         } catch (AlunoException ex) {
@@ -399,7 +401,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            // BOTÃO DE PESQUISAR
+        // BOTÃO DE PESQUISAR
         try {
             String mat = tfMatricula.getText();
 
@@ -424,7 +426,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-            //BOTÃO PARA PEGAR VELHO E NOVO
+        //BOTÃO PARA PEGAR VELHO E NOVO
         try {
             List<Aluno> alunos = alunoServico.velhoNovoAluno();
 
@@ -448,7 +450,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-            //BOTÃO PARA SALVAR O CSV
+        //BOTÃO PARA SALVAR O CSV
         try {
             alunoServico.salvarCSV();
             JOptionPane.showMessageDialog(null, "Arquivo Salvo no caminho: c:\\temp\\alunos.csv");

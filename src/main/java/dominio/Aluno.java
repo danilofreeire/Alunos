@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Aluno implements Serializable {
-
+    //objetos convertidos em bytes para serem convertidos em arquivos, trafegados em redes...
     private static final long serialVersion = 1L;
 
     @Id

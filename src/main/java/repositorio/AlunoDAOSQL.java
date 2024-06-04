@@ -58,6 +58,7 @@ public class AlunoDAOSQL implements AlunoDAO {
         try {
             emf = Persistence.createEntityManagerFactory("exemplo-jpa");
             em = emf.createEntityManager();
+            
             em.getTransaction().begin();
             alunos = em.createQuery("from Aluno", Aluno.class).getResultList();
             em.getTransaction().commit();
@@ -85,6 +86,7 @@ public class AlunoDAOSQL implements AlunoDAO {
         try {
             emf = Persistence.createEntityManagerFactory("exemplo-jpa");
             em = emf.createEntityManager();
+            
             Aluno aluno = em.find(Aluno.class, mat);
             em.getTransaction().begin();
             em.remove(aluno);
